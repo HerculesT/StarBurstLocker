@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">StarBurstLocker</string>
+    <string name="action_password">Password Change</string>
+    <string name="draw_pattern">Draw pattern to unlock</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="action_settings">Settings</string>
+    <string name="locker_invalid_password">Wrong password</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="ovarlay_permission_description">Allow StarBurstLocker to draw over other apps!</string>
+    <string name="usage_data_access_description">Allow StarBurstLocker to monitor your apps!</string>
+</resources>
