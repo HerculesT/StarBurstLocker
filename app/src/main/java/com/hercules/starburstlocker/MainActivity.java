@@ -1,5 +1,10 @@
 package com.hercules.starburstlocker;
 
+
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,15 +15,23 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import com.hercules.starburstlocker.fragments.AllAppFragment;
+import com.hercules.starburstlocker.fragments.PasswordFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     FragmentManager fragmentManager;
+    private static final int ACTIVATION_REQUEST = 3;
+    private DevicePolicyManager devicePolicyManager;
+    private ComponentName demoDeviceAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +39,18 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        demoDeviceAdmin = new ComponentName(this, DemoDeviceAdmin.class);
+        Log.e("DeviceAdminActive==", "" + demoDeviceAdmin);
+
+        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);// adds new device administrator
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, demoDeviceAdmin);//ComponentName of the administrator component.
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                "Blocks application uninstall");//additional explanation
+        startActivityForResult(intent, ACTIVATION_REQUEST);
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("All Applications");
         Fragment f = AllAppFragment.newInstance(AppLockConstants.ALL_APPS);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, f).commit();
+
 
     }
 

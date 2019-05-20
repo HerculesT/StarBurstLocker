@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +20,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
+
+import com.hercules.starburstlocker.password.PasswordActivity;
+import com.hercules.starburstlocker.password.PasswordSetActivity;
+import com.hercules.starburstlocker.receivers.AlarmReceiver;
+import com.hercules.starburstlocker.services.AppCheckServices;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -40,25 +48,36 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-
     public void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             if (!Settings.canDrawOverlays(this)) {
                 OverlayPermissionDialogFragment dialogFragment = new OverlayPermissionDialogFragment();
                 dialogFragment.show(getSupportFragmentManager(), "Overlay Permissions");
-
-            }else if(!hasUsageStatsPermission()){
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    UsageAcessDialogFragment dialogFragment = new UsageAcessDialogFragment();
-                    ft.add(dialogFragment, null);
-                    ft.commitAllowingStateLoss();
+            }
+            else if(!hasUsageStatsPermission()){
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                UsageAcessDialogFragment dialogFragment = new UsageAcessDialogFragment();
+                ft.add(dialogFragment, null);
+                ft.commitAllowingStateLoss();
             } else {
                     startService();
                 }
 
             }
+
         }
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event)
+    {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+        {
+            checkPermissions();
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.hercules.starburstlocker.password.SharedPreference;
+
 import java.util.ArrayList;
 import java.util.List;
 

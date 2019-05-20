@@ -1,4 +1,4 @@
-package com.hercules.starburstlocker;
+package com.hercules.starburstlocker.receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -6,6 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.hercules.starburstlocker.receivers.AlarmReceiver;
+import com.hercules.starburstlocker.services.AppCheckServices;
 
 
 public class BootComplete extends BroadcastReceiver {

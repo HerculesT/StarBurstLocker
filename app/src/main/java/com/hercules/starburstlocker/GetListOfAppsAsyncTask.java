@@ -6,6 +6,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
+import com.hercules.starburstlocker.fragments.AllAppFragment;
+import com.hercules.starburstlocker.password.SharedPreference;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

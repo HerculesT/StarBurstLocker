@@ -1,10 +1,11 @@
-package com.hercules.starburstlocker;
+package com.hercules.starburstlocker.password;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.hercules.starburstlocker.AppLockConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;

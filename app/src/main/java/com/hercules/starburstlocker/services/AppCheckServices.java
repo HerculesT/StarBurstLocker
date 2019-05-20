@@ -1,4 +1,4 @@
-package com.hercules.starburstlocker;
+package com.hercules.starburstlocker.services;
 
 import android.app.ActivityManager;
 import android.app.Dialog;
@@ -22,6 +22,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.hercules.starburstlocker.R;
+import com.hercules.starburstlocker.password.SharedPreference;
 import com.takwolf.android.lock9.Lock9View;
 
 import java.util.List;

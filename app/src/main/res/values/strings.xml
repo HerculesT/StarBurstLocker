@@ -9,4 +9,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="ovarlay_permission_description">Allow StarBurstLocker to draw over other apps!</string>
     <string name="usage_data_access_description">Allow StarBurstLocker to monitor your apps!</string>
+    <string name="fingerprint">Touch The Sensor!</string>
+    <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="fingerprint_success">Fingerprint recognized</string>
+    <string name="administrator_enabled">Device Administrator Activated!</string>
+    <string name="administrator_disabled">Device Administrator Disabled!</string>
 </resources>

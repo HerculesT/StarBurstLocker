@@ -1,4 +1,4 @@
-package com.hercules.starburstlocker;
+package com.hercules.starburstlocker.password;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,12 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.hercules.starburstlocker.AppLockConstants;
+import com.hercules.starburstlocker.LoadingActivity;
+import com.hercules.starburstlocker.R;
 import com.takwolf.android.lock9.Lock9View;
 
 public class PasswordActivity extends AppCompatActivity {
