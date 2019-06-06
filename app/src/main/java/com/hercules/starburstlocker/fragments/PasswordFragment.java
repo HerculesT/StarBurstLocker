@@ -18,10 +18,11 @@ import com.hercules.starburstlocker.MainActivity;
 import com.hercules.starburstlocker.R;
 import com.takwolf.android.lock9.Lock9View;
 
-
+/**This fragment initializes the view of the pattern view,
+ * while it also acts as a listener for the locking mechanism*/
 public class PasswordFragment extends Fragment {
     Lock9View lock9View;
-    Button confirmButton, retryButton;
+    Button confirmButton;
     TextView textView;
     boolean isEnteringFirstTime = true;
     boolean isEnteringSecondTime = false;
@@ -51,10 +52,10 @@ public class PasswordFragment extends Fragment {
 
         lock9View = (Lock9View) view.findViewById(R.id.lock_9_view);
         confirmButton = (Button) view.findViewById(R.id.confirmButton);
-        retryButton = (Button) view.findViewById(R.id.retryButton);
+
         textView = (TextView) view.findViewById(R.id.textView);
         confirmButton.setEnabled(false);
-        retryButton.setEnabled(false);
+
         sharedPreferences = getActivity().getSharedPreferences(AppLockConstants.MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -74,22 +75,10 @@ public class PasswordFragment extends Fragment {
 
             }
         });
-        retryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isEnteringFirstTime = true;
-                isEnteringSecondTime = false;
-                textView.setText("Draw Pattern");
-                confirmButton.setEnabled(false);
-                retryButton.setEnabled(false);
-
-            }
-        });
 
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
-                retryButton.setEnabled(true);
                 if (isEnteringFirstTime) {
                     enteredPassword = password;
                     isEnteringFirstTime = false;
@@ -103,7 +92,6 @@ public class PasswordFragment extends Fragment {
                         isEnteringFirstTime = true;
                         isEnteringSecondTime = false;
                         textView.setText("Draw Pattern");
-                        retryButton.setEnabled(false);
                     }
                 }
             }

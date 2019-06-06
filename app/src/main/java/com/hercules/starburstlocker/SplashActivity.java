@@ -51,22 +51,28 @@ public class SplashActivity extends AppCompatActivity {
     public void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
+            /**Checks if the application has the permissions needed to draw over applications
+             * if it doesn't it prompts the user with a pop up to access the permissions screen**/
             if (!Settings.canDrawOverlays(this)) {
                 OverlayPermissionDialogFragment dialogFragment = new OverlayPermissionDialogFragment();
                 dialogFragment.show(getSupportFragmentManager(), "Overlay Permissions");
             }
+            /**Checks access to the usage permissions**/
             else if(!hasUsageStatsPermission()){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 UsageAcessDialogFragment dialogFragment = new UsageAcessDialogFragment();
                 ft.add(dialogFragment, null);
                 ft.commitAllowingStateLoss();
             } else {
+                /**if all the above pass(application has permissions)
+                 * then it will continue and run the services**/
                     startService();
                 }
 
             }
 
         }
+        /**this will handle the back button press before the permissions are accepted.**/
     @Override
     public boolean dispatchKeyEvent(KeyEvent event)
     {
@@ -85,7 +91,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void startService(){
-        /****************************** too much important don't miss it *****************************/
+        /**Once the splash class is run, this event will trigger the application's services,
+         DO NOT REMOVE**/
         startService(new Intent(SplashActivity.this, AppCheckServices.class));
 
         try {

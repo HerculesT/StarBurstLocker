@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
+/**in this class, information about the installed applications on the device
+ * is set and then accessed by the main activities to show them*/
+
 public class AppInfo {
     private String name;
     private String packageName;

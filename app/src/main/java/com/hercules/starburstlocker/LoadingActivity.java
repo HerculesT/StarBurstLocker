@@ -22,6 +22,7 @@ public class LoadingActivity extends AppCompatActivity {
     Context context;
     private static int TIME_OUT = 2000;
 
+    /**this is the loader between the splashscreen and the mainactivity**/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,6 @@ public class LoadingActivity extends AppCompatActivity {
             }
         }, TIME_OUT);
     }
-
 
 
 }

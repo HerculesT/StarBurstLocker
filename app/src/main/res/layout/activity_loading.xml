@@ -4,9 +4,8 @@
     android:layout_height="match_parent"
     >
 
-
     <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
+        style="?android:progressBarStyleLargeInverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"

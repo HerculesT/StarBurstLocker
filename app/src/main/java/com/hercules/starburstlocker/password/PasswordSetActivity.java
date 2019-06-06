@@ -18,10 +18,11 @@ import com.hercules.starburstlocker.LoadingActivity;
 import com.hercules.starburstlocker.R;
 import com.takwolf.android.lock9.Lock9View;
 
-
+/**This class takes the input of the user and stores it to the password constant
+ * which will be later called by the PasswordActivity to compare the inputs.*/
 public class PasswordSetActivity extends AppCompatActivity {
     Lock9View lock9View;
-    Button confirmButton, retryButton;
+    Button confirmButton;
     TextView textView;
     boolean isEnteringFirstTime = true;
     boolean isEnteringSecondTime = false;
@@ -40,10 +41,8 @@ public class PasswordSetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_password_set);
         lock9View = (Lock9View) findViewById(R.id.lock_9_view);
         confirmButton = (Button) findViewById(R.id.confirmButton);
-        retryButton = (Button) findViewById(R.id.retryButton);
         textView = (TextView) findViewById(R.id.textView);
         confirmButton.setEnabled(false);
-        retryButton.setEnabled(false);
         sharedPreferences = getSharedPreferences(AppLockConstants.MyPREFERENCES, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -54,6 +53,8 @@ public class PasswordSetActivity extends AppCompatActivity {
                 editor.putString(AppLockConstants.PASSWORD, enteredPassword);
                 editor.commit();
 
+                /**once the pattern is set, the constant "IS_PASSWORD_SET" must be set to true,
+                 * otherwise each time the application runs, we will get the "PasswordSet" activity*/
                 editor.putBoolean(AppLockConstants.IS_PASSWORD_SET, true);
                 editor.commit();
 
@@ -62,22 +63,11 @@ public class PasswordSetActivity extends AppCompatActivity {
                 finish();
             }
         });
-        retryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isEnteringFirstTime = true;
-                isEnteringSecondTime = false;
-                textView.setText("Draw Pattern");
-                confirmButton.setEnabled(false);
-                retryButton.setEnabled(false);
 
-            }
-        });
 
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
-                retryButton.setEnabled(true);
                 if (isEnteringFirstTime) {
                     enteredPassword = password;
                     isEnteringFirstTime = false;
@@ -86,12 +76,12 @@ public class PasswordSetActivity extends AppCompatActivity {
                 } else if (isEnteringSecondTime) {
                     if (enteredPassword.matches(password)) {
                         confirmButton.setEnabled(true);
+                        textView.setText("Click Confirm");
                     } else {
                         Toast.makeText(getApplicationContext(), "Patterns did not match - Try again", Toast.LENGTH_SHORT).show();
                         isEnteringFirstTime = true;
                         isEnteringSecondTime = false;
                         textView.setText("Draw Pattern");
-                        retryButton.setEnabled(false);
                     }
                 }
             }

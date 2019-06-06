@@ -16,7 +16,8 @@ import com.hercules.starburstlocker.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**This fragment initializes the view for all the applications
+ * that will be shown*/
 public class AllAppFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
@@ -67,6 +68,7 @@ public class AllAppFragment extends Fragment {
 
     }
 
+    /**Updates the main list view*/
     public void updateData(List<AppInfo> list){
         this.list.addAll(list);
         mAdapter.notifyDataSetChanged();

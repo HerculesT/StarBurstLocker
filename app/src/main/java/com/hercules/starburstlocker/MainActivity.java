@@ -18,13 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+
 import com.hercules.starburstlocker.fragments.AllAppFragment;
 import com.hercules.starburstlocker.fragments.PasswordFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /**Gets the administration of the device to block uninstall**/
         devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         demoDeviceAdmin = new ComponentName(this, DemoDeviceAdmin.class);
         Log.e("DeviceAdminActive==", "" + demoDeviceAdmin);
@@ -49,9 +49,10 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                 "Blocks application uninstall");//additional explanation
         startActivityForResult(intent, ACTIVATION_REQUEST);
+        /**********************************************************/
 
 
-
+        /**Initializes the drawer menu**/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**will handle the back button press, having as first destination the all app fragment*/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,11 +95,10 @@ public class MainActivity extends AppCompatActivity
       Returns currentfragment
      **/
     public Fragment getCurrentFragment() {
-        // TODO Auto-generated method stub
         return getSupportFragmentManager().findFragmentById(R.id.fragment_container);
     }
 
-
+    /**The navigation menu items that can be selected with their intended fragment view*/
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -128,5 +129,8 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 
 }

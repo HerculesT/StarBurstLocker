@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.hercules.starburstlocker.fragments.AllAppFragment;
 import com.hercules.starburstlocker.password.SharedPreference;
@@ -17,13 +19,17 @@ import java.util.List;
 
 public class GetListOfAppsAsyncTask extends AsyncTask <String , Void, List<AppInfo>> {
 
+
     AllAppFragment container;
     public GetListOfAppsAsyncTask(AllAppFragment fragment){
         container = fragment;
     }
+
+
+
+
     @Override
     protected List<AppInfo> doInBackground(String... strings) {
-
         String requiredAppsType = strings[0];
 
         List<AppInfo> list = getListOfInstalledApp(container.getActivity());
@@ -61,8 +67,6 @@ public class GetListOfAppsAsyncTask extends AsyncTask <String , Void, List<AppIn
 
     /**
      * get the list of all installed applications in the device
-     *
-     * @return ArrayList of installed applications or null
      */
     public static List<AppInfo> getListOfInstalledApp(Context context) {
         PackageManager packageManager = context.getPackageManager();

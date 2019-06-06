@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**This class is a data storage like a database, but easier to implement,
+ * this class stores important data on which application is set as locked
+ * this data will remain even if the application is stopped, to clear the data,
+ * user has to manually clear everything or uninstall the application*/
 public class SharedPreference {
     public static final String LOCKED_APP = "locked_app";
 
