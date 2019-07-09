@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity
         Fragment f = AllAppFragment.newInstance(AppLockConstants.ALL_APPS);
         fragmentManager.beginTransaction().replace(R.id.fragment_container, f).commit();
 
-
     }
+
 
     /**will handle the back button press, having as first destination the all app fragment*/
     @Override

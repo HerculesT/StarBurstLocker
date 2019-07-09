@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.hercules.starburstlocker.AppLockConstants;
+import com.hercules.starburstlocker.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,8 +76,8 @@ public class SharedPreference {
     public String getPassword(Context context) {
         SharedPreferences passwordPref;
         passwordPref = context.getSharedPreferences(AppLockConstants.MyPREFERENCES, Context.MODE_PRIVATE);
-        if (passwordPref.contains(AppLockConstants.PASSWORD)) {
-            return passwordPref.getString(AppLockConstants.PASSWORD, "");
+        if (passwordPref.contains(DatabaseHelper.PASSWORD)) {
+            return passwordPref.getString(DatabaseHelper.PASSWORD, "");
         }
         return "";
     }

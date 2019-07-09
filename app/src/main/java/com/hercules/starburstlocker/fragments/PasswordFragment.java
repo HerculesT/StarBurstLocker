@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hercules.starburstlocker.AppLockConstants;
+import com.hercules.starburstlocker.DatabaseHelper;
 import com.hercules.starburstlocker.MainActivity;
 import com.hercules.starburstlocker.R;
 import com.takwolf.android.lock9.Lock9View;
@@ -62,7 +63,7 @@ public class PasswordFragment extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(AppLockConstants.PASSWORD, enteredPassword);
+                editor.putString(DatabaseHelper.PASSWORD, enteredPassword);
                 editor.commit();
 
                 editor.putBoolean(AppLockConstants.IS_PASSWORD_SET, true);
