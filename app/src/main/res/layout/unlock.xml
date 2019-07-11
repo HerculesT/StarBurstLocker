@@ -31,16 +31,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:layout_gravity="center"
-        app:lock9_nodeSrc="@drawable/node_small_normal"
-        app:lock9_nodeOnSrc="@drawable/node_small_active"
-        app:lock9_nodeOnAnim="@anim/node_on_2"
-        app:lock9_nodeSize="16dp"
-        app:lock9_nodeAreaExpand="24dp"
-        app:lock9_lineColor="#fff"
-        app:lock9_lineWidth="4dp"
-        app:lock9_autoLink="true"
-        app:lock9_enableVibrate="true"
-        app:lock9_vibrateTime="20" />
+        app:lock_size="3"
+        app:lock_enableVibrate="true"
+        app:lock_vibrateTime="100"
+        app:lock_lineColor="#a2ffffff"
+        app:lock_lineCorrectColor="#a2008800"
+        app:lock_lineErrorColor="#a2880000"
+        app:lock_lineWidth="8dp"
+        app:lock_nodeSize="40dp"
+        app:lock_nodeTouchExpand="15dp"
+        app:lock_nodeSrc="@drawable/pattern_lock_circle_node_normal"
+        app:lock_nodeHighlightSrc="@drawable/pattern_lock_circle_node_highlighted"
+        app:lock_nodeCorrectSrc="@drawable/pattern_lock_circle_node_correct"
+        app:lock_nodeErrorSrc="@drawable/pattern_lock_circle_node_error"
+        app:lock_nodeOnAnim="@anim/pattern_lock_node_anim_larger"
+        app:lock_autoLink="true"/>
 
 
 </LinearLayout>

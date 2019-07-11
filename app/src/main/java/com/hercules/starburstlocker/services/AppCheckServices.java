@@ -22,9 +22,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.hercules.patternlock.PatternLockView;
 import com.hercules.starburstlocker.R;
 import com.hercules.starburstlocker.password.SharedPreference;
-import com.takwolf.android.lock9.Lock9View;
+
 
 import java.util.List;
 import java.util.SortedMap;
@@ -132,20 +133,20 @@ public class AppCheckServices extends Service {
             context = getApplicationContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View promptsView = layoutInflater.inflate(R.layout.unlock, null, false);
-        Lock9View lock9View = (Lock9View) promptsView.findViewById(R.id.lock_9_view);
-        lock9View.setCallBack(new Lock9View.CallBack() {
+        PatternLockView patternLockView = promptsView.findViewById(R.id.patternlock_view);
+        patternLockView.setCallBack(new PatternLockView.CallBack() {
             @Override
-            public void onFinish(String password) {
-                if (password.matches(sharedPreference.getPassword(context))) {
-                    dialog.dismiss();
+            public int onFinish(PatternLockView.Password password) {
+                if (password.equals(sharedPreference.getPassword(context))) {
+                    dialog.dismiss(); //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Pattern Try Again", Toast.LENGTH_SHORT).show();
 
                 }
+                return 0;
             }
         });
-
 
 
         dialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen);

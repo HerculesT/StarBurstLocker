@@ -15,19 +15,23 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hercules.patternlock.PatternLockView;
 import com.hercules.starburstlocker.AppLockConstants;
 import com.hercules.starburstlocker.DatabaseHelper;
 import com.hercules.starburstlocker.LoadingActivity;
 import com.hercules.starburstlocker.R;
-import com.takwolf.android.lock9.Lock9View;
 
-import static com.hercules.starburstlocker.DatabaseHelper.PASSWORD;
+import java.util.Arrays;
+
 
 /**This class takes the input of the user and stores it to the password constant
  * which will be later called by the PasswordActivity to compare the inputs.*/
 public class PasswordSetActivity extends AppCompatActivity {
-    Lock9View lock9View;
+
+
+    private PatternLockView circleLockView;
     Button confirmButton;
+    Button Display;
     TextView textView;
     boolean isEnteringFirstTime = true;
     boolean isEnteringSecondTime = false;
@@ -37,7 +41,6 @@ public class PasswordSetActivity extends AppCompatActivity {
     Context context;
     DatabaseHelper DB;
 
-    Button Display;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +50,8 @@ public class PasswordSetActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         context = getApplicationContext();
         setContentView(R.layout.activity_password_set);
-        lock9View = (Lock9View) findViewById(R.id.lock_9_view);
+        circleLockView = findViewById(R.id.patternlock_view);
+        DisplayData();
         confirmButton = (Button) findViewById(R.id.confirmButton);
         textView = (TextView) findViewById(R.id.textView);
         confirmButton.setEnabled(false);
@@ -55,58 +59,63 @@ public class PasswordSetActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
         DB = new DatabaseHelper(this);
 
-        DisplayData();
 
+        /**Sets the password combination to the "enteredPassword" variable to use later.*/
+        circleLockView.setCallBack(new PatternLockView.CallBack() {
+            @Override
+            public int onFinish(PatternLockView.Password password) {
+                if(password.string.length() != 0){
+                    enteredPassword = password.string;
+                }
+                return 0;
+            }
+        });
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**Sends the input password to the database**/
-//                Boolean enteredPassword = DB.insertData(lock9View.getContext().toString());
 
+                /**Sends the password saved earlier to the SQLite database*/
+                    DB.insertData(DB.hashMe(enteredPassword));
 
-                /**Set the password and save in SQLite*/
-                 enteredPassword = lock9View.getContext().toString();
-                 if(enteredPassword.length() != 0){
-                     DB.insertData(enteredPassword);
-                 }
-
-//                editor.putString(DatabaseHelper.PASSWORD, enteredPassword); ////sharedPreferences password input.
-//                editor.commit();
                 /**once the pattern is set, the constant "IS_PASSWORD_SET" must be set to true,
                  * otherwise each time the application runs, we will get the "PasswordSet" activity*/
                 editor.putBoolean(AppLockConstants.IS_PASSWORD_SET, true); //TODO Change the way it checks the password availability.
                 editor.apply();
 
-//                Intent i = new Intent(PasswordSetActivity.this, LoadingActivity.class);
-//                startActivity(i);
-//                finish();
+                Intent i = new Intent(PasswordSetActivity.this, LoadingActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
-
-        lock9View.setCallBack(new Lock9View.CallBack() {
+        /**Second time input validation*/
+        circleLockView.setCallBack(new PatternLockView.CallBack() {
             @Override
-            public void onFinish(String Password) {
+            public int onFinish(PatternLockView.Password password) {
                 if (isEnteringFirstTime) {
-                    enteredPassword = Password;
-                    isEnteringFirstTime = false;
+                    DB.hashMe(enteredPassword = password.string);//Hashes and assigns the password to "enteredPassword"
+                    isEnteringFirstTime = false;//keeps the times password was entered
                     isEnteringSecondTime = true;
                     textView.setText("Re-Draw Pattern");
                 } else if (isEnteringSecondTime) {
-                    if (enteredPassword.matches(Password)) {
-                        confirmButton.setEnabled(true);
+                    if (enteredPassword.equals(password.string)) {
+                        confirmButton.setEnabled(true);//enables the confirmation button if the passwords match
                         textView.setText("Click Confirm");
                     } else {
                         Toast.makeText(getApplicationContext(), "Patterns did not match - Try again", Toast.LENGTH_SHORT).show();
-                        isEnteringFirstTime = true;
+                        confirmButton.setEnabled(false);//if the passwords don't match the button locks again
+                        isEnteringFirstTime = true;//resets the password input tries
                         isEnteringSecondTime = false;
                         textView.setText("Draw Pattern");
                     }
                 }
+                return 0;
             }
         });
     }
+
+    //TODO JUST FOR DEBUGING REASONS.
     public void DisplayData(){
         Display = findViewById(R.id.Display);
         Display.setOnClickListener(

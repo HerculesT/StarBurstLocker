@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 
+//import com.hercules.starburstlocker.password.PasswordActivity;
 import com.hercules.starburstlocker.password.PasswordActivity;
 import com.hercules.starburstlocker.password.PasswordSetActivity;
 import com.hercules.starburstlocker.receivers.AlarmReceiver;

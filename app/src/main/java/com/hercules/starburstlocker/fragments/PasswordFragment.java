@@ -17,17 +17,17 @@ import com.hercules.starburstlocker.AppLockConstants;
 import com.hercules.starburstlocker.DatabaseHelper;
 import com.hercules.starburstlocker.MainActivity;
 import com.hercules.starburstlocker.R;
-import com.takwolf.android.lock9.Lock9View;
+import com.hercules.patternlock.PatternLockView;
 
 /**This fragment initializes the view of the pattern view,
  * while it also acts as a listener for the locking mechanism*/
 public class PasswordFragment extends Fragment {
-    Lock9View lock9View;
+    PatternLockView circleLockView;
     Button confirmButton;
     TextView textView;
     boolean isEnteringFirstTime = true;
     boolean isEnteringSecondTime = false;
-    String enteredPassword;
+    PatternLockView.Password enteredPassword;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -51,7 +51,7 @@ public class PasswordFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.activity_password_set, container, false);
 
-        lock9View = (Lock9View) view.findViewById(R.id.lock_9_view);
+        circleLockView = view.findViewById(R.id.patternlock_view);
         confirmButton = (Button) view.findViewById(R.id.confirmButton);
 
         textView = (TextView) view.findViewById(R.id.textView);
@@ -63,7 +63,7 @@ public class PasswordFragment extends Fragment {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(DatabaseHelper.PASSWORD, enteredPassword);
+                editor.putString(DatabaseHelper.PASSWORD, String.valueOf(enteredPassword));
                 editor.commit();
 
                 editor.putBoolean(AppLockConstants.IS_PASSWORD_SET, true);
@@ -77,16 +77,16 @@ public class PasswordFragment extends Fragment {
             }
         });
 
-        lock9View.setCallBack(new Lock9View.CallBack() {
+        circleLockView.setCallBack(new PatternLockView.CallBack() {
             @Override
-            public void onFinish(String password) {
+            public int onFinish(PatternLockView.Password password) {
                 if (isEnteringFirstTime) {
                     enteredPassword = password;
                     isEnteringFirstTime = false;
                     isEnteringSecondTime = true;
                     textView.setText("Re-Draw Pattern");
                 } else if (isEnteringSecondTime) {
-                    if (enteredPassword.matches(password)) {
+                    if (enteredPassword.equals(password)) {
                         confirmButton.setEnabled(true);
                     } else {
                         Toast.makeText(getActivity(), "Patterns did not match - Try again!", Toast.LENGTH_SHORT).show();
@@ -95,6 +95,7 @@ public class PasswordFragment extends Fragment {
                         textView.setText("Draw Pattern");
                     }
                 }
+                return -1;
             }
         });
         return view;
