@@ -55,13 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-//    public void insertData(String password){
-//        SQLiteDatabase db = getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(PASSWORD, /**hashMe*/(password));
-//        db.insert(TABLE_NAME, null, contentValues);
-//    }
-
     /**This method was made to make sure the hash works
     public Cursor displayData(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -110,6 +103,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
 
+    }
+
+    public boolean IsPasswordSet(int ID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "Select * from " + TABLE_NAME + " where " + ID +"=" + 1 ;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
 
 }

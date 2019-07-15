@@ -1,8 +1,6 @@
 package com.hercules.starburstlocker.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hercules.starburstlocker.AppLockConstants;
-import com.hercules.starburstlocker.DatabaseHelper;
 import com.hercules.starburstlocker.MainActivity;
 import com.hercules.starburstlocker.R;
 import com.hercules.patternlock.PatternLockView;
@@ -28,8 +24,6 @@ public class PasswordFragment extends Fragment {
     boolean isEnteringFirstTime = true;
     boolean isEnteringSecondTime = false;
     PatternLockView.Password enteredPassword;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
 
     public static PasswordFragment newInstance() {
         PasswordFragment passwordFragment = new PasswordFragment();
@@ -52,22 +46,14 @@ public class PasswordFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_password_set, container, false);
 
         circleLockView = view.findViewById(R.id.patternlock_view);
-        confirmButton = (Button) view.findViewById(R.id.confirmButton);
+        confirmButton = view.findViewById(R.id.confirmButton);
 
-        textView = (TextView) view.findViewById(R.id.textView);
+        textView = view.findViewById(R.id.textView);
         confirmButton.setEnabled(false);
-
-        sharedPreferences = getActivity().getSharedPreferences(AppLockConstants.MyPREFERENCES, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editor.putString(DatabaseHelper.PASSWORD, String.valueOf(enteredPassword));
-                editor.commit();
-
-                editor.putBoolean(AppLockConstants.IS_PASSWORD_SET, true);
-                editor.commit();
 
                 Intent i = new Intent(getActivity(), MainActivity.class);
                 getActivity().startActivity(i);

@@ -25,8 +25,8 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         />
 
-    <com.takwolf.android.lock9.Lock9View
-        android:id="@+id/lock_9_view"
+    <com.hercules.patternlock.PatternLockView
+        android:id="@+id/patternlock_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"

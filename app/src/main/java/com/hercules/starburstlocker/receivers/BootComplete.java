@@ -17,7 +17,7 @@ public class BootComplete extends BroadcastReceiver {
         Log.d("football ", "BootComplete");
         context.startService(new Intent(context, AppCheckServices.class));
 
-          /*-------alarm setting after boot again--------*/
+        /*-------alarm setting after boot again--------*/
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 999, alarmIntent, 0);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

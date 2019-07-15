@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hercules.patternlock.PatternLockView;
+import com.hercules.starburstlocker.DatabaseHelper;
 import com.hercules.starburstlocker.R;
 import com.hercules.starburstlocker.password.SharedPreference;
 
@@ -46,10 +47,11 @@ public class AppCheckServices extends Service {
     public static String previousApp = "";
     SharedPreference sharedPreference;
     List<String> pakageName;
-
+    DatabaseHelper DB;
     @Override
     public void onCreate() {
         super.onCreate();
+        DB = new DatabaseHelper(getApplicationContext());
         context = getApplicationContext();
         sharedPreference = new SharedPreference();
         if (sharedPreference != null) {
@@ -137,8 +139,8 @@ public class AppCheckServices extends Service {
         patternLockView.setCallBack(new PatternLockView.CallBack() {
             @Override
             public int onFinish(PatternLockView.Password password) {
-                if (password.equals(sharedPreference.getPassword(context))) {
-                    dialog.dismiss(); //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (DB.checkUserLogin(DB.hashMe(password.string))) {
+                    dialog.dismiss();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Pattern Try Again", Toast.LENGTH_SHORT).show();
@@ -189,8 +191,8 @@ public class AppCheckServices extends Service {
 
         }
         /* We want this service to continue running until it is explicitly
-        * stopped, so return sticky.
-        */
+         * stopped, so return sticky.
+         */
         return START_STICKY;
     }
 
